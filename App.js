@@ -5,6 +5,8 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import { MaterialIcons } from "@expo/vector-icons";
 
+import { TaskProvider } from "./TaskContext";
+
 import Homescreen from "./screens/Homescreen";
 import Taskscreen from "./screens/Taskscreen";
 import Calendarscreen from "./screens/Calendarscreen";
@@ -12,21 +14,6 @@ import Settingscreen from "./screens/Settingscreen";
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createNativeStackNavigator();
-
-const StackNavigator = () => (
-  <Stack.Navigator>
-    <Stack.Screen
-      name="Setting"
-      component={Settingscreen}
-      options={{
-        tabBarLabel: "Settings",
-        tabBarIcon: ({ color }) => (
-          <MaterialIcons name="settings" color={color} size={26} />
-        ),
-      }}
-    />
-  </Stack.Navigator>
-);
 
 function TabNavigator() {
   return (
@@ -66,43 +53,35 @@ function TabNavigator() {
           ),
         }}
       />
-      {/* <Tab.Screen
-        name="Setting"
-        component={Settingscreen}
-        options={{
-          tabBarLabel: "Settings",
-          tabBarIcon: ({ color }) => (
-            <MaterialIcons name="settings" color={color} size={26} />
-          ),
-        }}
-      /> */}
     </Tab.Navigator>
   );
 }
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Main">
-        <Stack.Screen
-          name="Main"
-          component={TabNavigator}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="Setting"
-          component={Settingscreen}
-          options={{
-            headerStyle: {
-              backgroundColor: "#FFBE98",
-            },
-            headerTitleStyle: {
-              fontSize: 32,
-              fontWeight: "bold",
-            },
-          }}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <TaskProvider>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Main">
+          <Stack.Screen
+            name="Main"
+            component={TabNavigator}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Setting"
+            component={Settingscreen}
+            options={{
+              headerStyle: {
+                backgroundColor: "#FFBE98",
+              },
+              headerTitleStyle: {
+                fontSize: 32,
+                fontWeight: "bold",
+              },
+            }}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </TaskProvider>
   );
 }

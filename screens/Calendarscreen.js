@@ -1,12 +1,49 @@
-import { SafeAreaView, StyleSheet, View, Text } from "react-native";
-import React from "react";
+import { SafeAreaView, StyleSheet, View, Text, Button } from "react-native";
+import React, { useContext, useState } from "react";
+import { Calendar } from "react-native-big-calendar";
+import { TaskContext } from "../TaskContext";
+
 import TitleHeader from "../components/TitleHeader";
 
 export default function Calendarscreen({ navigation }) {
+  const [calendarMode, setCalendarMode] = useState("week");
+
+  const { task, setTask } = useContext(TaskContext);
+
   return (
     <SafeAreaView style={styles.container}>
       <TitleHeader navigation={navigation}>Calendar</TitleHeader>
       {/* TODO: CALENDAR THAT WILL DISPLAY ALL UPCOMING TASKS */}
+      <View style={styles.mode}>
+        <View style={{ flex: 1 }}>
+          <Button
+            title="Day"
+            onPress={() => {
+              setCalendarMode("day");
+            }}
+            color={"#E2BFB3"}
+          />
+        </View>
+        <View style={{ flex: 1 }}>
+          <Button
+            title="Week"
+            onPress={() => {
+              setCalendarMode("week");
+            }}
+            color={"#E2BFB3"}
+          />
+        </View>
+        <View style={{ flex: 1 }}>
+          <Button
+            title="Month"
+            onPress={() => {
+              setCalendarMode("month");
+            }}
+            color={"#E2BFB3"}
+          />
+        </View>
+      </View>
+      <Calendar events={task} height={400} mode={calendarMode} />
     </SafeAreaView>
   );
 }
@@ -15,7 +52,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#FEECE2",
-    // alignItems: "center",
-    // justifyContent: "center",
+  },
+  mode: {
+    flex: 1,
+    flexGrow: 0.15,
+    flexDirection: "row",
   },
 });
