@@ -21,7 +21,7 @@ export default function Calendarscreen({ navigation }) {
             onPress={() => {
               setCalendarMode("day");
             }}
-            color={"#E2BFB3"}
+            color={"#B8664A"}
           />
         </View>
         <View style={{ flex: 1 }}>
@@ -30,7 +30,7 @@ export default function Calendarscreen({ navigation }) {
             onPress={() => {
               setCalendarMode("week");
             }}
-            color={"#E2BFB3"}
+            color={"#B8664A"}
           />
         </View>
         <View style={{ flex: 1 }}>
@@ -39,11 +39,25 @@ export default function Calendarscreen({ navigation }) {
             onPress={() => {
               setCalendarMode("month");
             }}
-            color={"#E2BFB3"}
+            color={"#B8664A"}
           />
         </View>
       </View>
-      <Calendar events={task} height={400} mode={calendarMode} />
+      {/* Remove onPressCell, only for testing */}
+      <Calendar
+        events={task}
+        height={400}
+        mode={calendarMode}
+        onPressCell={(date) => {
+          console.log(
+            date.getFullYear(),
+            date.getMonth(),
+            date.getDay(),
+            date.getHours(),
+            date.getMinutes()
+          );
+        }}
+      />
     </SafeAreaView>
   );
 }
