@@ -3,6 +3,8 @@ import React, { createContext, useState } from "react";
 export const TaskContext = createContext();
 
 export const TaskProvider = ({ children }) => {
+  // month starts from 0 (january = 0, feb = 1, march = 2, ...)
+  // REMOVE meeting event, only for testing
   const [task, setTask] = useState([
     {
       title: "Meeting",
