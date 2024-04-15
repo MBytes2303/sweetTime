@@ -1,11 +1,11 @@
+//App.js
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, Button } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import { MaterialIcons } from "@expo/vector-icons";
 import React, { useState } from 'react';
-import { Button } from "react-native";
 
 import { TaskProvider } from "./TaskContext";
 
@@ -80,42 +80,45 @@ export default function App() {
   return (
     <TaskProvider>
       <NavigationContainer>
-        <Stack.Navigator>
-          {!isLoggedIn ? (
-            <Stack.Screen
-              name="Login"
-              options={{ title: "Login" }}
-            >
-              {props => <Loginscreen {...props} handleLogin={handleLogin} />}
-            </Stack.Screen>
-          ) : (
-            <Stack.Screen
-              name="Main"
-              component={TabNavigator}
-              options={{ headerShown: false }}
-            />
-          )}
-          <Stack.Screen
-            name="Setting"
-            component={Settingscreen}
-            options={{
-              headerStyle: {
-                backgroundColor: "#FFBE98",
-              },
-              headerTitleStyle: {
-                fontSize: 32,
-                fontWeight: "bold",
-              },
-              headerRight: () => (
-                <Button
-                  onPress={handleLogout}
-                  title="Logout"
-                  color="#FF0000"
-                />
-              ),
-            }}
-          />
-        </Stack.Navigator>
+      <Stack.Navigator>
+  {!isLoggedIn ? (
+    <Stack.Screen
+      name="Login"
+      options={{ title: "Login" }}
+    >
+      {props => <Loginscreen {...props} handleLogin={handleLogin} />}
+    </Stack.Screen>
+  ) : (
+    <>
+      <Stack.Screen
+        name="Main"
+        component={TabNavigator}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+  name="Setting"
+  options={{
+    headerStyle: {
+      backgroundColor: "#FFBE98",
+    },
+    headerTitleStyle: {
+      fontSize: 32,
+      fontWeight: "bold",
+    },
+    headerRight: () => (
+      <Button
+        onPress={() => handleLogout(setIsLoggedIn)}
+        title="Logout"
+        color="#FF0000"
+      />
+    ),
+  }}
+>
+  {props => <Settingscreen {...props} setIsLoggedIn={setIsLoggedIn} />}
+</Stack.Screen>
+    </>
+  )}
+</Stack.Navigator>
       </NavigationContainer>
     </TaskProvider>
   );
