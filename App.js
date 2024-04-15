@@ -4,13 +4,17 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import { MaterialIcons } from "@expo/vector-icons";
+import React, { useState } from 'react';
+import { Button } from "react-native";
 
 import { TaskProvider } from "./TaskContext";
 
+import Loginscreen from "./screens/Loginscreen";
 import Homescreen from "./screens/Homescreen";
 import Taskscreen from "./screens/Taskscreen";
 import Calendarscreen from "./screens/Calendarscreen";
 import Settingscreen from "./screens/Settingscreen";
+
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -58,15 +62,39 @@ function TabNavigator() {
 }
 
 export default function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const handleLogin = (username, password) => {
+    // Here you can implement your login logic
+    if (username === "admin" && password === "password") {
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+    }
+  };
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+  };
+
   return (
     <TaskProvider>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Main">
-          <Stack.Screen
-            name="Main"
-            component={TabNavigator}
-            options={{ headerShown: false }}
-          />
+        <Stack.Navigator>
+          {!isLoggedIn ? (
+            <Stack.Screen
+              name="Login"
+              options={{ title: "Login" }}
+            >
+              {props => <Loginscreen {...props} handleLogin={handleLogin} />}
+            </Stack.Screen>
+          ) : (
+            <Stack.Screen
+              name="Main"
+              component={TabNavigator}
+              options={{ headerShown: false }}
+            />
+          )}
           <Stack.Screen
             name="Setting"
             component={Settingscreen}
@@ -78,6 +106,13 @@ export default function App() {
                 fontSize: 32,
                 fontWeight: "bold",
               },
+              headerRight: () => (
+                <Button
+                  onPress={handleLogout}
+                  title="Logout"
+                  color="#FF0000"
+                />
+              ),
             }}
           />
         </Stack.Navigator>
