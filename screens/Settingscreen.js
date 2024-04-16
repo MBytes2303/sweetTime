@@ -1,18 +1,10 @@
 // Settingscreen.js
-import React, { useState } from "react";
+import React from "react";
 import { View, StyleSheet, Switch, Text } from "react-native";
 import { useColors } from "../components/useColors";
 
-const Settingscreen = () => {
-  const [isDarkMode, setIsDarkMode] = useState(false);
+const Settingscreen = ({ isDarkMode, toggleDarkMode }) => {
   const { background, text } = useColors(isDarkMode);
-
-  const toggleDarkMode = () => {
-    console.log("Toggling dark mode...");
-    console.log("Current isDarkMode:", isDarkMode);
-    setIsDarkMode(!isDarkMode);
-    console.log("Updated isDarkMode:", !isDarkMode);
-  };
 
   return (
     <View style={[styles.container, { backgroundColor: background }]}>
@@ -23,7 +15,7 @@ const Settingscreen = () => {
           <Switch value={isDarkMode} onValueChange={toggleDarkMode} />
         </View>
       </View>
-      <Text style={{ color: text }}>Testing color</Text>
+      <Text style={{color: text}}>Testing color</Text>
     </View>
   );
 };
