@@ -128,6 +128,19 @@ export default function App() {
                   />
                 )}
               </Stack.Screen>
+              <Stack.Screen
+                name="Home"
+                options={{
+                  headerShown: false
+                }}
+              >
+                {props => (
+                  <Homescreen
+                    {...props}
+                    isDarkMode={isDarkMode}
+                  />
+                )}
+              </Stack.Screen>
             </>
           )}
         </Stack.Navigator>
