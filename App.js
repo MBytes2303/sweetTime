@@ -5,16 +5,14 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import { MaterialIcons } from "@expo/vector-icons";
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 import { TaskProvider } from "./TaskContext";
 
 import Loginscreen from "./screens/Loginscreen";
-import Homescreen from "./screens/Homescreen";
 import Taskscreen from "./screens/Taskscreen";
 import Calendarscreen from "./screens/Calendarscreen";
 import Settingscreen from "./screens/Settingscreen";
-
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -27,16 +25,6 @@ function TabNavigator() {
       inactiveColor="#979290"
       barStyle={{ backgroundColor: "#FFBE98" }}
     >
-      <Tab.Screen
-        name="Home"
-        component={Homescreen}
-        options={{
-          tabBarLabel: "Home",
-          tabBarIcon: ({ color }) => (
-            <MaterialIcons name="home" color={color} size={26} />
-          ),
-        }}
-      />
       <Tab.Screen
         name="Task"
         component={Taskscreen}
@@ -87,11 +75,8 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator>
           {!isLoggedIn ? (
-            <Stack.Screen
-              name="Login"
-              options={{ title: "Login" }}
-            >
-              {props => <Loginscreen {...props} handleLogin={handleLogin} />}
+            <Stack.Screen name="Login" options={{ title: "Login" }}>
+              {(props) => <Loginscreen {...props} handleLogin={handleLogin} />}
             </Stack.Screen>
           ) : (
             <>
@@ -119,7 +104,7 @@ export default function App() {
                   ),
                 }}
               >
-                {props => (
+                {(props) => (
                   <Settingscreen
                     {...props}
                     setIsLoggedIn={setIsLoggedIn}
@@ -131,15 +116,10 @@ export default function App() {
               <Stack.Screen
                 name="Home"
                 options={{
-                  headerShown: false
+                  headerShown: false,
                 }}
               >
-                {props => (
-                  <Homescreen
-                    {...props}
-                    isDarkMode={isDarkMode}
-                  />
-                )}
+                {(props) => <Homescreen {...props} isDarkMode={isDarkMode} />}
               </Stack.Screen>
             </>
           )}
