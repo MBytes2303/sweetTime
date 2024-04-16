@@ -13,7 +13,6 @@ export default function Calendarscreen({ navigation }) {
   return (
     <SafeAreaView style={styles.container}>
       <TitleHeader navigation={navigation}>Calendar</TitleHeader>
-      {/* TODO: CALENDAR THAT WILL DISPLAY ALL UPCOMING TASKS */}
       <View style={styles.mode}>
         <View style={{ flex: 1 }}>
           <Button
@@ -43,21 +42,7 @@ export default function Calendarscreen({ navigation }) {
           />
         </View>
       </View>
-      {/* Remove onPressCell, only for testing */}
-      <Calendar
-        events={task}
-        height={400}
-        mode={calendarMode}
-        onPressCell={(date) => {
-          console.log(
-            date.getFullYear(),
-            date.getMonth(),
-            date.getDay(),
-            date.getHours(),
-            date.getMinutes()
-          );
-        }}
-      />
+      <Calendar events={task} height={400} mode={calendarMode} />
     </SafeAreaView>
   );
 }
