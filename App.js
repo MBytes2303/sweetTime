@@ -1,4 +1,4 @@
-//App.js
+// App.js
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View, Button } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
@@ -63,9 +63,14 @@ function TabNavigator() {
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  const toggleDarkMode = () => {
+    setIsDarkMode(!isDarkMode);
+  };
 
   const handleLogin = (username, password) => {
-    // Here you can implement your login logic
+    // Here can implement login logic
     if (username === "admin" && password === "password") {
       setIsLoggedIn(true);
     } else {
@@ -80,45 +85,52 @@ export default function App() {
   return (
     <TaskProvider>
       <NavigationContainer>
-      <Stack.Navigator>
-  {!isLoggedIn ? (
-    <Stack.Screen
-      name="Login"
-      options={{ title: "Login" }}
-    >
-      {props => <Loginscreen {...props} handleLogin={handleLogin} />}
-    </Stack.Screen>
-  ) : (
-    <>
-      <Stack.Screen
-        name="Main"
-        component={TabNavigator}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-  name="Setting"
-  options={{
-    headerStyle: {
-      backgroundColor: "#FFBE98",
-    },
-    headerTitleStyle: {
-      fontSize: 32,
-      fontWeight: "bold",
-    },
-    headerRight: () => (
-      <Button
-        onPress={() => handleLogout(setIsLoggedIn)}
-        title="Logout"
-        color="#FF0000"
-      />
-    ),
-  }}
->
-  {props => <Settingscreen {...props} setIsLoggedIn={setIsLoggedIn} />}
-</Stack.Screen>
-    </>
-  )}
-</Stack.Navigator>
+        <Stack.Navigator>
+          {!isLoggedIn ? (
+            <Stack.Screen
+              name="Login"
+              options={{ title: "Login" }}
+            >
+              {props => <Loginscreen {...props} handleLogin={handleLogin} />}
+            </Stack.Screen>
+          ) : (
+            <>
+              <Stack.Screen
+                name="Main"
+                component={TabNavigator}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="Setting"
+                options={{
+                  headerStyle: {
+                    backgroundColor: "#FFBE98",
+                  },
+                  headerTitleStyle: {
+                    fontSize: 32,
+                    fontWeight: "bold",
+                  },
+                  headerRight: () => (
+                    <Button
+                      onPress={() => handleLogout(setIsLoggedIn)}
+                      title="Logout"
+                      color="#FF0000"
+                    />
+                  ),
+                }}
+              >
+                {props => (
+                  <Settingscreen
+                    {...props}
+                    setIsLoggedIn={setIsLoggedIn}
+                    isDarkMode={isDarkMode}
+                    toggleDarkMode={toggleDarkMode}
+                  />
+                )}
+              </Stack.Screen>
+            </>
+          )}
+        </Stack.Navigator>
       </NavigationContainer>
     </TaskProvider>
   );

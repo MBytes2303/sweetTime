@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     paddingHorizontal: 20,
-    backgroundColor: "#FEECE2", // Same as Homescreen background color
+    backgroundColor: "#FEECE2", 
   },
   title: {
     fontSize: 24,
